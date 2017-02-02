@@ -19,3 +19,10 @@ test-registration: _ensure-mocha
 
 tests: test-registration
 
+develop:
+	@redis-server --port 11181 &
+	@NODE_ENV="development" node index
+
+production:
+	@redis-server --port 11182 &
+	@NODE_ENV="production" node index
