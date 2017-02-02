@@ -1,6 +1,6 @@
 .PHONY: tests
 
-$(if $(findstring /,$(MAKEFILE_LIST)),$(error Run Makefile from director it is located in.))
+$(if $(findstring /,$(MAKEFILE_LIST)),$(error Run Makefile from directory it is located in.))
 
 MOCHA := ./node_modules/mocha/bin/mocha
 
@@ -12,10 +12,10 @@ _ensure-mocha:
 		exit 1; \
 	fi;
 
-test-registration:
+test-registration: _ensure-mocha
 	@echo "Testing registration..."
 
 	@${MOCHA} ./test/registration.js
 
-tests: _ensure-mocha test-registration
+tests: test-registration
 
