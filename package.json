@@ -7,7 +7,7 @@
     "test": "mocha"
   },
   "author": "Travis Roman",
-  "license": "NONE",
+  "license": "UNLICENSED",
   "engines": {
   	"node": ">=6.0.0"
   },
