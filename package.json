@@ -8,6 +8,10 @@
   },
   "author": "Travis Roman",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infernoboy/jsb-sync.git"
+  },
   "dependencies": {
     "body-parser": "~1.16.0",
     "connect-redis": "~3.2.0",
