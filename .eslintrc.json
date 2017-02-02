@@ -1,0 +1,47 @@
+{
+	"env": {
+		"es6": true,
+		"node": true,
+		"mocha": true
+	},
+	"excludes": ["*/node_modules/**"],
+	"extends": "eslint:recommended",
+	"rules": {
+		"guard-for-in": "error",
+		"curly": ["error", "multi"],
+		"class-methods-use-this": "error",
+		"dot-location": ["error", "property"],
+		"eqeqeq": ["error", "always"],
+		"indent": ["error",
+			"tab", {
+				"SwitchCase": 1
+			}
+		],
+		"linebreak-style": [
+			"error",
+			"unix"
+		],
+		"quotes": [
+			"error",
+			"single"
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"no-unused-vars": ["error", {
+			"varsIgnorePattern": "^_",
+			"argsIgnorePattern": "^_"
+		}],
+		"no-console": ["error", {
+			"allow": ["log", "error"]
+		}],
+		"keyword-spacing": ["error", {
+			"before": true,
+			"after": true
+		}]
+	},
+	"parserOptions": {
+		"ecmaVersion": 6
+	}
+}
