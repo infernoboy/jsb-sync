@@ -4,12 +4,13 @@
   "description": "Synchronize JSB settings across different browsers.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "make test-all",
+    "start": "make develop"
   },
   "author": "Travis Roman",
   "license": "UNLICENSED",
   "engines": {
-  	"node": ">=6.0.0"
+    "node": ">=6.0.0"
   },
   "repository": {
     "type": "git",
@@ -24,21 +25,25 @@
     "express-session": "~1.15.0",
     "file-stream-rotator": "~0.0.6",
     "fs-extra": "~2.0.0",
+    "ioredis": "^2.5.0",
     "is-running": "^2.1.0",
     "morgan": "~1.7.0",
+    "node-uuid": "^1.4.7",
     "object.entries": "~1.0.3",
-    "redis": "~2.6.2",
+    "pug": "^2.0.0-beta10",
     "request": "~2.79.0",
     "sanitize-filename": "~1.6.1",
+    "scryptsy": "~2.0.0",
     "shell-escape": "^0.2.0",
-    "speakeasy": "~2.0.0",
-    "scryptsy": "~2.0.0"
+    "speakeasy": "~2.0.0"
   },
   "devDependencies": {
     "eslint": "^3.0.0",
     "eslint-config-google": "~0.7.1",
     "mocha": "~3.2.0",
+    "mocha-clean": "^1.0.0",
     "should": "~11.2.0",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "ursa": "^0.9.4"
   }
 }

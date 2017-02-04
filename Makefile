@@ -2,27 +2,36 @@
 
 $(if $(findstring /,$(MAKEFILE_LIST)),$(error Run Makefile from directory it is located in.))
 
-MOCHA := ./node_modules/mocha/bin/mocha
+MOCHA_BIN=./node_modules/mocha/bin/mocha
+MOCHA_CLEAN=./node_modules/mocha-clean/
+MOCHA=./node_modules/mocha/bin/mocha --harmony --require mocha-clean
 
 _ensure-mocha:
-	@echo "Checking for mocha..."
+	@if [ ! -f $(MOCHA_BIN) ]; then echo "Missing mocha. Run npm-install first." && exit 1; fi;
+	@if [ ! -d $(MOCHA_CLEAN) ]; then echo "Missing mocha-clean. Run npm-install first." && exit 2; fi;
 
-	@if [ ! -f ${MOCHA} ] ; then \
-		echo "Run npm install before running tests. (${MOCHA} not found)" ; \
-		exit 1; \
-	fi;
+test-all: _ensure-mocha
+	@$(MOCHA)
 
 test-registration: _ensure-mocha
-	@echo "Testing registration..."
+	@$(MOCHA) ./test/api/registration.js
 
-	@${MOCHA} ./test/registration.js
+test-bruteforce-protection: _ensure-mocha
+	@$(MOCHA) ./test/api/bruteforce.js
 
-tests: test-registration
+tests: test-bruteforce-protection test-registration
 
-develop:
-	@redis-server --port 11181 &
-	@NODE_ENV="development" node index
+stop-redis-develop:
+	@echo "Stopping redis...";
+	@shopt -s nullglob; for file in /usr/local/var/run/redis/development-*; do kill -INT `cat $${file}` 2>/dev/null; done
 
-production:
-	@redis-server --port 11182 &
-	@NODE_ENV="production" node index
+start-redis-develop: stop-redis-develop
+	@sleep 1; \
+	redis-server config/redis/development/no-disk.1.conf & sleep 0.1; \
+	redis-server config/redis/development/no-disk.2.conf & sleep 0.1; \
+	redis-server config/redis/development/disk.1.conf & sleep 0.1; \
+	redis-server config/redis/development/disk.2.conf & sleep 0.1;
+
+develop: start-redis-develop
+	@NODE_ENV="development" node --harmony-async-await index; \
+	echo "SAD";
