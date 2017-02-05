@@ -17,6 +17,7 @@
     "url": "https://github.com/infernoboy/jsb-sync.git"
   },
   "dependencies": {
+    "argon2": "^0.15.0",
     "body-parser": "~1.16.0",
     "connect-redis": "~3.2.0",
     "express": "~4.14.0",
@@ -26,16 +27,13 @@
     "file-stream-rotator": "~0.0.6",
     "fs-extra": "~2.0.0",
     "ioredis": "^2.5.0",
-    "is-running": "^2.1.0",
     "morgan": "~1.7.0",
     "node-uuid": "^1.4.7",
+    "object-extend": "^0.5.0",
     "object.entries": "~1.0.3",
     "pug": "^2.0.0-beta10",
     "request": "~2.79.0",
-    "sanitize-filename": "~1.6.1",
-    "scryptsy": "~2.0.0",
-    "shell-escape": "^0.2.0",
-    "speakeasy": "~2.0.0"
+    "sanitize-filename": "~1.6.1"
   },
   "devDependencies": {
     "eslint": "^3.0.0",
