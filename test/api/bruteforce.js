@@ -1,11 +1,11 @@
 /*
-* @Last modified in Sublime on Feb 05, 2017 01:36:12 PM
+* @Last modified in Sublime on Feb 06, 2017 07:38:06 AM
 */
 
 'use strict';
 
-const {app} = require('../../lib/app');
-const {bruteAPIRedis} = require('../../lib/routes/api');
+const {app} = require('app');
+const {bruteAPIRedis} = require('routes/api');
 const should = require('should');
 const request = require('supertest')(app.get('supertest'));
 

@@ -1,28 +1,18 @@
 /*
-* @Last modified in Sublime on Feb 05, 2017 01:32:32 PM
+* @Last modified in Sublime on Feb 13, 2017 04:59:11 PM
 */
 
 'use strict';
 
-const {app, newAccounts, accounts, syncSession} = require('../../lib/app');
-const {bruteAPIRedis} = require('../../lib/routes/api/bruteforce');
+const {app, newAccounts, accounts, syncSession} = require('app');
+const {bruteAPIRedis} = require('routes/api/bruteforce');
 const should = require('should');
-const ursa = require('ursa');
 const request = require('supertest')(app.get('supertest'));
+const CLIENT = require('../config');
+// const uuid = require('uuid/v4');
 
-const keys = ursa.generatePrivateKey();
-
-const CLIENT = {
-	INVALID_EMAIL: 'not',
-	UNKNOWN_EMAIL: 'notmyemail@domain.com',
-	EMAIL: 'myemail@domain.com',
-	PASSWORD: 'mypassword',
-	VERIFICATION_KEY: '12a331d7-6ad4-4b67-9aa6-cb56283d00a2',
-	KEYS: {
-		PRIVATE: ursa.createPrivateKey(keys.toPrivatePem('base64'), '', 'base64'),
-		PUBLIC: ursa.createPublicKey(keys.toPublicPem('base64'), 'base64')
-	}
-};
+// CLIENT.EMAIL = uuidv4() + '@';
+// CLIENT.PASSWORD = uuidv4();
 
 describe('New Client', function () {
 	beforeEach(bruteAPIRedis.flushdb.bind(bruteAPIRedis));
@@ -69,7 +59,7 @@ describe('New Client', function () {
 				.post('/api/client/register')
 				.send({
 					email: CLIENT.EMAIL,
-					password: 'z'
+					password: CLIENT.INVALID_PASSWORD
 				})
 				.expect({
 					error: 'invalid password'
@@ -85,9 +75,17 @@ describe('New Client', function () {
 					email: CLIENT.EMAIL,
 					password: CLIENT.PASSWORD
 				})
-				.expect({
-					result: 'created new client'
-				}, done);
+				.expect(200)
+				.end((err, res) =>{
+					if (err)
+						return done(err);
+
+					should(res.body).not.have.property('error');
+					should(res.body.result).be.exactly('created new client');
+					should(res.body.clientID).have.length(36);
+
+					done();
+				});
 		}).timeout(1000);
 	});
 
@@ -166,10 +164,6 @@ describe('New Client', function () {
 				}, done);
 		});
 	});
-});
-
-describe('Existing Client', function () {
-	beforeEach(bruteAPIRedis.flushdb.bind(bruteAPIRedis));
 	
 	let syncSessionID;
 
@@ -181,7 +175,7 @@ describe('Existing Client', function () {
 				.post('/api/client/login')
 				.send({
 					email: CLIENT.UNKNOWN_EMAIL,
-					password: 'aaaaa'
+					password: CLIENT.ACCOUNT_INVALID_PASSWORD
 				})
 				.expect({
 					error: 'client not found'
@@ -195,7 +189,7 @@ describe('Existing Client', function () {
 				.post('/api/client/login')
 				.send({
 					email: CLIENT.EMAIL,
-					password: 'aaaaa'
+					password: CLIENT.ACCOUNT_INVALID_PASSWORD
 				})
 				.expect({
 					error: 'mismatch'
@@ -243,6 +237,9 @@ describe('Existing Client', function () {
 				})
 				.expect(200)
 				.end((err, res) => {
+					if (err)
+						return done(err);
+
 					should(res.body).not.have.property('error');
 					should(res.body.result).be.exactly('login successful');
 					should(res.body.syncSessionID).have.length(36);
@@ -253,43 +250,37 @@ describe('Existing Client', function () {
 					done();
 				});
 		});
-	});
 
-	describe('Master Data', function () {
-		it('should fail without syncSessionID', (done) => {
-			request
-				.post('/api/client/data/setMaster')
-				.expect({
-					error: 'missing syncSessionID'
-				}, done);
-		});		
+		it('should fail to logout with mismatching email and syncSessionID', function (done) {
+			this.slow(800);
 
-		it('should fail with invalid syncSessionID', (done) => {
 			request
-				.post('/api/client/data/setMaster')
+				.post('/api/client/logout')
 				.send({
-					syncSessionID: '1'
+					syncSessionID,
+					email: CLIENT.INVALID_EMAIL					
 				})
 				.expect({
-					error: 'invalid syncSessionID'
+					error: 'session not found'
 				}, done);
 		});
 
-		it.skip('should fail with invalid IP', (done) => {
+		it('should successfully logout', function (done) {
+			this.slow(800);
+
 			request
-				.post('/api/client/data/setMaster')
-				.set('X-Forwarded-For', '10.1.2.3')
-				.send({ syncSessionID })
+				.post('/api/client/logout')
+				.send({
+					syncSessionID,
+					email: CLIENT.EMAIL
+				})
 				.expect({
-					error: 'invalid syncSessionID'
-				}, done);
-		});
+					result: 'logout successful'
+				}, (err) => {
+					syncSessionID = null;
 
-		it('should set master data file', (done) => {
-			request
-				.post('/api/client/data/setMaster')
-				.send({ syncSessionID })
-				.expect('"OK"', done);
+					done(err);
+				});
 		});
 	});
 });
