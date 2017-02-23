@@ -1,5 +1,5 @@
 /*
-* @Last modified in Sublime on Feb 06, 2017 07:43:21 AM
+* @Last modified in Sublime on Feb 23, 2017 12:25:29 PM
 */
 
 'use strict';
@@ -31,50 +31,12 @@ describe('Syncing', function () {
 				.end((err, res) => {
 					should(res.body).not.have.property('error');
 					should(res.body.result).be.exactly('login successful');
-					should(res.body.syncSessionID).have.length(36);
+					should(res.body.data.syncSessionID).have.length(36);
 
-					syncSessionID = res.body.syncSessionID;
+					syncSessionID = res.body.data.syncSessionID;
 
 					done();
 				});
-		});
-	});
-
-	describe('Up', function () {
-		it('should fail without syncSessionID', (done) => {
-			request
-				.post('/api/client/sync/up')
-				.expect({
-					error: 'missing syncSessionID'
-				}, done);
-		});		
-
-		it('should fail with invalid syncSessionID', (done) => {
-			request
-				.post('/api/client/sync/up')
-				.send({
-					syncSessionID: '1'
-				})
-				.expect({
-					error: 'invalid syncSessionID'
-				}, done);
-		});
-
-		it.skip('should fail with invalid IP', (done) => {
-			request
-				.post('/api/client/sync/up')
-				.set('X-Forwarded-For', '10.1.2.3')
-				.send({ syncSessionID })
-				.expect({
-					error: 'invalid syncSessionID'
-				}, done);
-		});
-
-		it('should upload data file', (done) => {
-			request
-				.post('/api/client/sync/up')
-				.send({ syncSessionID })
-				.expect('"OK"', done);
 		});
 	});
 });

@@ -1,5 +1,5 @@
 /*
-* @Last modified in Sublime on Feb 13, 2017 04:59:11 PM
+* @Last modified in Sublime on Feb 23, 2017 12:24:39 PM
 */
 
 'use strict';
@@ -110,7 +110,7 @@ describe('New Client', function () {
 					verificationKey: 'NONE'
 				})
 				.expect({
-					error: 'invalid verification key for email'
+					error: 'invalid verification key'
 				}, done);
 		});
 
@@ -209,9 +209,9 @@ describe('New Client', function () {
 				.end((err, res) => {
 					should(res.body).not.have.property('error');
 					should(res.body.result).be.exactly('login successful');
-					should(res.body.syncSessionID).have.length(36);
+					should(res.body.data.syncSessionID).have.length(36);
 
-					syncSessionID = res.body.syncSessionID;
+					syncSessionID = res.body.data.syncSessionID;
 
 					done();
 				});
@@ -242,10 +242,10 @@ describe('New Client', function () {
 
 					should(res.body).not.have.property('error');
 					should(res.body.result).be.exactly('login successful');
-					should(res.body.syncSessionID).have.length(36);
-					res.body.syncSessionID.should.not.be.exactly(syncSessionID);
+					should(res.body.data.syncSessionID).have.length(36);
+					res.body.data.syncSessionID.should.not.be.exactly(syncSessionID);
 
-					syncSessionID = res.body.syncSessionID;
+					syncSessionID = res.body.data.syncSessionID;
 
 					done();
 				});
