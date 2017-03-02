@@ -1,5 +1,5 @@
 /*
-* @Last modified in Sublime on Feb 23, 2017 12:24:39 PM
+* @Last modified in Sublime on Mar 01, 2017 08:04:26 PM
 */
 
 'use strict';
@@ -9,10 +9,6 @@ const {bruteAPIRedis} = require('routes/api/bruteforce');
 const should = require('should');
 const request = require('supertest')(app.get('supertest'));
 const CLIENT = require('../config');
-// const uuid = require('uuid/v4');
-
-// CLIENT.EMAIL = uuidv4() + '@';
-// CLIENT.PASSWORD = uuidv4();
 
 describe('New Client', function () {
 	beforeEach(bruteAPIRedis.flushdb.bind(bruteAPIRedis));

@@ -21,6 +21,7 @@
     "bluebird": "^3.4.7",
     "body-parser": "~1.16.1",
     "connect-redis": "~3.2.0",
+    "crypto-js": "^3.1.9-1",
     "express": "~4.14.1",
     "express-brute": "~0.7.0-",
     "express-brute-redis": "~0.0.1",
@@ -28,6 +29,8 @@
     "file-stream-rotator": "~0.0.7",
     "fs-extra": "~2.0.0",
     "ioredis": "^2.5.0",
+    "is-plain-object": "^2.0.1",
+    "jsrp": "^0.2.3",
     "lokijs": "^1.4.3",
     "lzutf8": "^0.3.5",
     "morgan": "~1.8.1",
@@ -38,6 +41,7 @@
     "request": "~2.79.0",
     "rotating-file-stream": "^1.1.9",
     "sanitize-filename": "~1.6.1",
+    "socket.io": "^1.7.3",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
