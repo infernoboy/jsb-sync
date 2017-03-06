@@ -34,7 +34,7 @@
 			"argsIgnorePattern": "^_"
 		}],
 		"no-console": ["error", {
-			"allow": ["log", "error"]
+			"allow": ["log", "error", "info", "warn", "debug", "dir"]
 		}],
 		"keyword-spacing": ["error", {
 			"before": true,
