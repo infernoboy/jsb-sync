@@ -49,17 +49,20 @@ start-redis-develop: _ensure-environment stop-redis-develop
 	$(REDIS_BIN) lib/configs/redis/development/no-disk.2.conf & \
 	$(REDIS_BIN) lib/configs/redis/development/disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/development/disk.2.conf & \
-	sleep 4
+	read
 
 start-redis-production: _ensure-environment stop-redis-production
 	@$(REDIS_BIN) lib/configs/redis/production/no-disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/production/no-disk.2.conf & \
 	$(REDIS_BIN) lib/configs/redis/production/disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/production/disk.2.conf & \
-	sleep 4
+	read
 
-develop: start-redis-develop
+start-app-develop:
 	@NODE_ENV="development" $(NODE_PATH) $(NODE) index
 
-production: start-redis-production
+start-app-production:
 	@NODE_ENV="production" $(NODE_PATH) $(NODE) index
+
+develop: start-redis-develop start-app-develop
+production: start-redis-production start-app-production
