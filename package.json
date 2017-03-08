@@ -1,6 +1,6 @@
 {
   "name": "jsb-sync",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Synchronize JSB settings across different browsers.",
   "main": "app.js",
   "scripts": {
