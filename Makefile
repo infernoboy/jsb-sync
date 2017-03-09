@@ -47,18 +47,24 @@ stop-redis-production:
 		kill -INT `cat $${pid_file}` 2>/dev/null && sleep 0.2; \
 	done;
 
-start-redis-develop: _ensure-environment stop-redis-develop
+start-redis-develop-bg: _ensure-environment stop-redis-develop
 	@$(REDIS_BIN) lib/configs/redis/development/no-disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/development/no-disk.2.conf & \
 	$(REDIS_BIN) lib/configs/redis/development/disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/development/disk.2.conf & \
-	while true; do sleep 1000; done
+	sleep 4
 
-start-redis-production: _ensure-environment stop-redis-production
+start-redis-production-bg: _ensure-environment stop-redis-production
 	@$(REDIS_BIN) lib/configs/redis/production/no-disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/production/no-disk.2.conf & \
 	$(REDIS_BIN) lib/configs/redis/production/disk.1.conf & \
 	$(REDIS_BIN) lib/configs/redis/production/disk.2.conf & \
+	sleep 4
+
+start-redis-develop: _ensure-environment stop-redis-develop start-redis-develop-bg
+	while true; do sleep 1000; done
+
+start-redis-production: _ensure-environment stop-redis-production start-redis-production-bg
 	while true; do sleep 1000; done
 
 start-app-develop:
@@ -67,5 +73,5 @@ start-app-develop:
 start-app-production:
 	@NODE_ENV="production" $(NODE_PATH) $(NODE) index
 
-develop: start-redis-develop start-app-develop
-production: start-redis-production start-app-production
+develop: start-redis-develop-bg start-app-develop
+production: start-redis-production-bg start-app-production
