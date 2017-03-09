@@ -9,6 +9,7 @@ NODE_PATH=NODE_PATH=./lib/
 MOCHA_BIN=./node_modules/mocha/bin/mocha
 MOCHA_CLEAN=./node_modules/mocha-clean/
 MOCHA=./node_modules/mocha/bin/mocha -b --harmony --require mocha-clean
+RUN_DIR=../run
 
 _ensure-environment:
 ifeq ($(NODE_BIN),)
@@ -34,13 +35,13 @@ test-syncing: _ensure-mocha
 
 stop-redis-develop:
 	@shopt -s nullglob; \
-	for pid_file in /usr/local/var/run/redis/jsb-development-*; do \
+	for pid_file in $(RUN_DIR)/redis/jsb-development-*; do \
 		kill -INT `cat $${pid_file}` 2>/dev/null && sleep 0.2; \
 	done;
 
 stop-redis-production:
 	@shopt -s nullglob; \
-	for pid_file in /usr/local/var/run/redis/jsb-production-*; do \
+	for pid_file in $(RUN_DIR)/redis/jsb-production-*; do \
 		kill -INT `cat $${pid_file}` 2>/dev/null && sleep 0.2; \
 	done;
 
