@@ -11,7 +11,7 @@ NODE_PATH=NODE_PATH=./lib/
 MOCHA_BIN=./node_modules/mocha/bin/mocha
 MOCHA_CLEAN=./node_modules/mocha-clean/
 MOCHA=./node_modules/mocha/bin/mocha -b --harmony --require mocha-clean
-RUN_DIR=../run
+RUN_DIR=../var/run
 
 _ensure-environment:
 ifeq ($(NODE_BIN),)
