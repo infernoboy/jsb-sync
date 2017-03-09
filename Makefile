@@ -7,7 +7,7 @@ $(if $(findstring /,$(MAKEFILE_LIST)),$(error Run Makefile from directory it is 
 REDIS_BIN=$(shell which redis-server)
 NODE_BIN=$(shell which node)
 NODE=$(NODE_BIN) --harmony-async-await
-NODE_PATH=./lib/
+NODE_PATH=NODE_PATH=./lib/
 MOCHA_BIN=./node_modules/mocha/bin/mocha
 MOCHA_CLEAN=./node_modules/mocha-clean/
 MOCHA=./node_modules/mocha/bin/mocha -b --harmony --require mocha-clean
