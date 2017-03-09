@@ -1,3 +1,5 @@
+#!/bin/bash
+
 .PHONY: test
 
 $(if $(findstring /,$(MAKEFILE_LIST)),$(error Run Makefile from directory it is located in))
