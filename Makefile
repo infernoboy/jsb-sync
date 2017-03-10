@@ -62,9 +62,13 @@ start-redis-production-bg: _ensure-environment stop-redis-production
 	sleep 4
 
 start-redis-develop: _ensure-environment stop-redis-develop start-redis-develop-bg
-	while true; do sleep 10; done
+	@while true; do sleep 10; done
 
-start-redis-production: _ensure-environment stop-redis-production start-redis-production-bg
+start-redis-production: _ensure-environment stop-redis-production
+	@$(REDIS_BIN) lib/configs/redis/production/no-disk.1.conf & \
+	$(REDIS_BIN) lib/configs/redis/production/no-disk.2.conf & \
+	$(REDIS_BIN) lib/configs/redis/production/disk.1.conf & \
+	$(REDIS_BIN) lib/configs/redis/production/disk.2.conf & \
 	while true; do sleep 10; done
 
 start-app-develop:
