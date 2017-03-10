@@ -62,10 +62,10 @@ start-redis-production-bg: _ensure-environment stop-redis-production
 	sleep 4
 
 start-redis-develop: _ensure-environment stop-redis-develop start-redis-develop-bg
-	while true; do sleep 1000; done
+	while true; do sleep 10; done
 
 start-redis-production: _ensure-environment stop-redis-production start-redis-production-bg
-	while true; do sleep 1000; done
+	while true; do sleep 10; done
 
 start-app-develop:
 	@NODE_ENV="development" $(NODE_PATH) $(NODE) index
