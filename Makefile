@@ -65,8 +65,7 @@ start-redis-develop: _ensure-environment stop-redis-develop start-redis-develop-
 	@while true; do sleep 10; done
 
 start-redis-production: _ensure-environment stop-redis-production start-redis-production-bg
-	@trap "make stop-redis-production" SIGTERM; \
-	while true; do sleep 10; done
+	@while true; do sleep 10; done
 
 start-app-develop:
 	@NODE_ENV="development" $(NODE_PATH) $(NODE) index
