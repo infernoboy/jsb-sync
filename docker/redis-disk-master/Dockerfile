@@ -1,7 +1,5 @@
 FROM redis
 
-EXPOSE 11140
-
 VOLUME ["/data"]
 
 RUN mkdir -p /var/db/redis

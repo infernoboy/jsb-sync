@@ -1,0 +1,23 @@
+version: "3"
+services:
+  redis-disk-master:
+    build: ./docker/redis-disk-master
+    restart: always
+  redis-disk-slave:
+    build: ./docker/redis-disk-slave
+    restart: always
+  redis-no-disk-master:
+    build: ./docker/redis-no-disk-master
+    restart: always
+  redis-no-disk-slave:
+    build: ./docker/redis-no-disk-slave
+    restart: always
+  jsb-sync:
+    build: .
+    ports:
+      - "22160:22160"
+    links:
+      - redis-disk-master
+      - redis-no-disk-master
+    restart: always
+    user: nodejs
