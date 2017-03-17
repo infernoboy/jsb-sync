@@ -1,6 +1,6 @@
 FROM redis
 
-VOLUME ["/data"]
+VOLUME ["/var/db/redis/"]
 
 RUN mkdir -p /var/db/redis
 
