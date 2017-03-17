@@ -1,4 +1,5 @@
 FROM redis
+LABEL maintainer "travis@toggleable.com"
 
 VOLUME ["/var/db/redis/"]
 

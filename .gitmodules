@@ -1,0 +1,12 @@
+[submodule "redis-disk-master"]
+	path = ./docker/redis-disk-master
+	url = https://github.com/infernoboy/jsb-sync-redis-disk-master.git
+[submodule "redis-disk-slave"]
+	path = ./docker/redis-disk-slave
+	url = https://github.com/infernoboy/jsb-sync-redis-disk-slave.git
+[submodule "redis-no-disk-master"]
+	path = ./docker/redis-no-disk-master
+	url = https://github.com/infernoboy/jsb-sync-redis-no-disk-master.git
+[submodule "redis-no-disk-slave"]
+	path = ./docker/redis-no-disk-slave
+	url = https://github.com/infernoboy/jsb-sync-redis-no-disk-slave.git

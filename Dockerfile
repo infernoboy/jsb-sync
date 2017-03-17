@@ -1,4 +1,5 @@
 FROM node:latest
+LABEL maintainer "travis@toggleable.com"
 
 RUN groupadd -r nodejs && useradd -r -g nodejs nodejs
 RUN apt-get update && apt-get -y install ssmtp mutt sudo
@@ -19,7 +20,7 @@ RUN chown nodejs:nodejs /home/nodejs/jsb-sync-data
 
 VOLUME ["jsb-sync-data:/home/nodejs/jsb-sync-data"]
 
-ENV NODE_ENV production
+ENV NODE_ENV docker-production
 ENV NODE_PORT 22160
 ENV NODE_PATH /home/nodejs/jsb-sync/lib/
 
