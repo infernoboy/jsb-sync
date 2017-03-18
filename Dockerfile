@@ -18,10 +18,7 @@ RUN echo set copy=no >> /etc/Muttrc
 RUN mkdir /home/nodejs/jsb-sync-data
 RUN chown nodejs:nodejs /home/nodejs/jsb-sync-data
 
-VOLUME ["jsb-sync-data:/home/nodejs/jsb-sync-data"]
-
 ENV NODE_ENV docker-production
-ENV NODE_PORT 22160
 ENV NODE_PATH /home/nodejs/jsb-sync/lib/
 
 CMD ["/home/nodejs/jsb-sync/startup.sh", "/usr/local/bin/node", "index.js"]
